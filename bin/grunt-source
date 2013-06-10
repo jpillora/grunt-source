@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+
+var colors = require('colors'),
+    util = require('util'),
+    fs = require('fs'),
+    spawn = require('child_process').spawn,
+    defaultFileName = "GruntSource.json";
+
+function exit() {
+  console.log(util.format.apply(util, arguments).red);
+  process.exit(1);
+}
+
+if(!fs.existsSync(defaultFileName))
+  exit("Configuration file ('%s') not found.", defaultFileName);
+
+var config = fs.readFileSync(defaultFileName);
+
+try {
+  config = JSON.parse(config);
+} catch(e) {
+  exit("Configuration file has an error: %s", e);
+}
+
+if(!config.source)
+  exit("Configuration file is the 'source' property");
+
+if(!fs.existsSync(config.source))
+  exit("Source directory ('%s') not found", config.source);
+
+var gruntArgs = process.argv.slice(2);
+gruntArgs.push('--basedir');
+gruntArgs.push(process.cwd());
+
+var gruntProc = spawn("grunt", gruntArgs, {
+  cwd: config.source
+});
+
+gruntProc.stdout.pipe(process.stdout);
+gruntProc.stderr.pipe(process.stderr);
