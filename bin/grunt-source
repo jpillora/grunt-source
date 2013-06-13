@@ -1,16 +1,12 @@
 #!/usr/bin/env node
 
-var colors = require('colors'),
+var colors = { red:'\u001b[31m',blue:'\u001b[34m'},
     util = require('util'),
     fs = require('fs'),
-    spawn = require('child_process').spawn,
+    child = require('child_process'),
     defaultFileName = "GruntSource.json";
 
-function exit() {
-  console.log(util.format.apply(util, arguments).red);
-  process.exit(1);
-}
-
+//get config and run
 if(!fs.existsSync(defaultFileName))
   exit("Configuration file ('%s') not found.", defaultFileName);
 
@@ -25,16 +21,66 @@ try {
 if(!config.source)
   exit("Configuration file is the 'source' property");
 
-if(!fs.existsSync(config.source))
-  exit("Source directory ('%s') not found", config.source);
+if(fs.existsSync(config.source))
+  run();
+else if(config.repo)
+  checkout();
+else
+  exit("Source directory '%s' not found." +
+    " Try adding a 'repo' to your configuration.", config.source);
 
-var gruntArgs = process.argv.slice(2);
-gruntArgs.push('--basedir');
-gruntArgs.push(process.cwd());
+// =======================
 
-var gruntProc = spawn("grunt", gruntArgs, {
-  cwd: config.source
-});
+function checkout() {
+  log("Cloning '%s' into '%s'", config.repo, config.source);
+  spawn("git", ['clone', config.repo, config.source], function (err) {
+    if(err) exit("Clone error");
+    update();
+  });
+}
 
-gruntProc.stdout.pipe(process.stdout);
-gruntProc.stderr.pipe(process.stderr);
+function pull() {
+  //TODO
+}
+
+function update() {
+  log("NPM updating '%s'", config.source);
+  spawn("npm", ["install"], { cwd: config.source }, function(err) {
+    if(err) exit("Error NPM updating");
+    run();
+  });
+}
+
+function run() {
+  var args = process.argv.slice(2).
+    concat(['--basedir', process.cwd()]);
+
+  spawn("grunt", args, {
+    cwd: config.source
+  }, function(err) {
+    if(err) exit("grunt-source error!");
+    log('grunt-source done');
+  });
+}
+
+function log() {
+  console.log(colors.blue + util.format.apply(util, arguments));
+}
+
+function exit() {
+  console.log(colors.red + util.format.apply(util, arguments));
+  process.exit(1);
+}
+
+function spawn() {
+  var args = Array.prototype.slice.call(arguments);
+  var callback = args.pop();
+  var proc = child.spawn.apply(child, args);
+  proc.stdout.pipe(process.stdout);
+  proc.stderr.pipe(process.stderr);
+  proc.on('close', function (code) {
+    callback(code === 0 ? null : "error");
+  });
+  return proc;
+}
+
