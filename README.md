@@ -44,7 +44,7 @@ The `GruntSource.json` file
 
 ## CLI
 
-The `grunt-source` executable will proxy all arguments to the `grunt` executable. So something like `gruntsource task2:target4 task3:target1` will work.
+The `grunt-source` executable will proxy all arguments to the `grunt` executable. So something like `grunt-source task2:target4 task3:target1` will work.
 
 ## Examples
 
