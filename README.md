@@ -56,7 +56,7 @@ See [jquery-navigator](https://github.com/jpillora/jquery.navigator) for an exam
 
 See [grunt-source-ghpages](https://github.com/jpillora/grunt-source-ghpages) for another example grunt source
 
-See [verify-com](https://github.com/jpillora/verify-com) for an example project using `grunt-source-ghpages`
+See [verifyjs-com](https://github.com/jpillora/verifyjs-com) for an example project using `grunt-source-ghpages`
 
 
 ## Todo
