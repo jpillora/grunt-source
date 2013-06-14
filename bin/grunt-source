@@ -3,8 +3,10 @@
 var colors = { red:'\u001b[31m',blue:'\u001b[34m'},
     util = require('util'),
     fs = require('fs'),
+    path = require('path'),
     child = require('child_process'),
-    defaultFileName = "GruntSource.json";
+    defaultFileName = "GruntSource.json",
+    home = process.env.USERPROFILE || process.env.HOME || process.env.HOMEPATH;
 
 //get config and run
 if(!fs.existsSync(defaultFileName))
@@ -21,6 +23,9 @@ try {
 if(!config.source)
   exit("Configuration file is the 'source' property");
 
+if(/^~/.test(config.source))
+  config.source = path.join(home, config.source.replace(/^~/,''));
+
 if(fs.existsSync(config.source))
   run();
 else if(config.repo)
@@ -30,6 +35,11 @@ else
     " Try adding a 'repo' to your configuration.", config.source);
 
 // =======================
+
+function validateSource() {
+  //TODO
+  //git remote -v show
+}
 
 function checkout() {
   log("Cloning '%s' into '%s'", config.repo, config.source);
@@ -45,6 +55,10 @@ function pull() {
 
 function update() {
   log("NPM updating '%s'", config.source);
+
+  if(!fs.existsSync(path.join(config.source,'package.json')))
+    exit("Source directory has no 'package.json'");
+
   spawn("npm", ["install"], { cwd: config.source }, function(err) {
     if(err) exit("Error NPM updating");
     run();

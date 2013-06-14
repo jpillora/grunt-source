@@ -8,7 +8,9 @@
 
 **A solution** - The Grunt team has made [grunt-init](https://github.com/gruntjs/grunt-init) which gives you a *static* copy of a predefined template. Note, grunt-init does provides a way to template in new values for each copy however, this is can still be improved.
 
-**A better solution** - Enter *Grunt Source*, instead of making numerous copies of a given Grunt environment, you can actually use one Grunt environment for multiple projects. Also, having a directory separation between the Grunt environment and the actual source will help to reduce the complexity of your project.  
+**A better solution** - Enter *Grunt Source*, instead of making numerous copies of a given Grunt environment, you can actually use one Grunt environment for multiple projects. Also, having a directory separation between the Grunt environment and the actual source will help to reduce the complexity of your project.
+
+When using Grunt Source, projects will now contain only a `GruntSource.json`, thereby abstracting the magic of Grunt outside of the project. This will help those who don't need to know the complexities of the build, yet still want to modify the source.
 
 ## Install
 
@@ -51,6 +53,15 @@ The `grunt-source` executable will proxy all arguments to the `grunt` executable
 See [grunt-source-jquery](https://github.com/jpillora/grunt-source-jquery) for an example grunt source
 
 See [jquery-navigator](https://github.com/jpillora/jquery.navigator) for an example project using `grunt-source-jquery`
+
+See [grunt-source-ghpages](https://github.com/jpillora/grunt-source-ghpages) for another example grunt source
+
+See [verify-com](https://github.com/jpillora/verify-com) for an example project using `grunt-source-ghpages`
+
+
+## Todo
+
+* Allow configuration from `GruntSource.json` to augment the `grunt.initConfig(...)` configuration
 
 #### MIT License
 
