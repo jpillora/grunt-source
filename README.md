@@ -10,7 +10,7 @@
 
 **A better solution** - Enter *Grunt Source*, instead of making numerous copies of a given Grunt environment, you can actually use one Grunt environment for multiple projects. Also, having a directory separation between the Grunt environment and the actual source will help to reduce the complexity of your project.
 
-When using Grunt Source, projects will now contain only a `GruntSource.json`, thereby abstracting the magic of Grunt outside of the project. This will help those who don't need to know the complexities of the build, yet still want to modify the source.
+When using Grunt Source, projects will now contain only a `Gruntsource.json`, thereby abstracting the magic of Grunt outside of the project. This will help those who don't need to know the complexities of the build, yet still want to modify the source.
 
 ## Install
 
@@ -20,7 +20,7 @@ npm install -g grunt-source
 
 ## Usage
 
-Create a `GruntSource.json` file in your project's root:
+Create a `Gruntsource.json` file in your project's root:
 
 ```
 {
@@ -39,7 +39,7 @@ grunt-source
 
 ## Configuration
 
-The `GruntSource.json` file
+The `Gruntsource.json` file
 
 * `source` - the directory where the *source* Grunt environment resides
 * `repo` - the Git repository which
@@ -50,18 +50,19 @@ The `grunt-source` executable will proxy all arguments to the `grunt` executable
 
 ## Examples
 
-See [grunt-source-jquery](https://github.com/jpillora/grunt-source-jquery) for an example grunt source
-
-See [jquery-navigator](https://github.com/jpillora/jquery.navigator) for an example project using `grunt-source-jquery`
-
 See [grunt-source-ghpages](https://github.com/jpillora/grunt-source-ghpages) for another example grunt source
 
 See [verifyjs-com](https://github.com/jpillora/verifyjs-com) for an example project using `grunt-source-ghpages`
 
+<!--
+See [grunt-source-jquery](https://github.com/jpillora/grunt-source-jquery) for an example grunt source
+
+See [jquery-navigator](https://github.com/jpillora/jquery.navigator) for an example project using `grunt-source-jquery`
+-->
 
 ## Todo
 
-* Allow configuration from `GruntSource.json` to augment the `grunt.initConfig(...)` configuration
+* Allow configuration from `Gruntsource.json` to augment the `grunt.initConfig(...)` configuration
 
 #### MIT License
 
