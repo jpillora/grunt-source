@@ -4,6 +4,7 @@ var colors = { red:'\u001b[31m', blue:'\u001b[34m', reset: '\u001b[0m' },
     util = require('util'),
     fs = require('fs'),
     path = require('path'),
+    mkdirp = require('mkdirp'),
     child = require('child_process'),
     defaultFileName = "Gruntsource.json",
     home = process.env.USERPROFILE || process.env.HOME || process.env.HOMEPATH;
@@ -42,7 +43,8 @@ function validateSource() {
 }
 
 function checkout() {
-  log("Cloning '%s' into '%s'", config.repo, config.source);
+  log("Source doesn't exist, cloning...", config.repo, config.source);
+  mkdirp.sync(path.dirname(config.source));
   spawn("git", ['clone', config.repo, config.source], function (err) {
     if(err) exit("Clone error");
     update();

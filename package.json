@@ -1,9 +1,12 @@
 {
   "name": "grunt-source",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Reuse multiple Grunt environments across multiple projects",
   "author": "Jaime Pillora <dev@jpillora.com>",
   "bin": {
     "grunt-source": "./bin/grunt-source"
+  },
+  "dependencies": {
+    "mkdirp": "~0.3.5"
   }
 }
