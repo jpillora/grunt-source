@@ -24,8 +24,8 @@ Create a `Gruntsource.json` file in your project's root:
 
 ```
 {
-  "source": "../grunt-source-jquery",
-  "repo": "https://github.com/jpillora/grunt-source-jquery.git"
+  "source": "~/.grunt-sources/ghpages",
+  "repo": "https://github.com/jpillora/grunt-source-ghpages.git"
 }
 ```
 
@@ -35,7 +35,22 @@ Then run:
 grunt-source
 ```
 
-*Note: If the `source` directory doesn't exist, the `repo` will be cloned into `source`, then `npm install` will be run inside `source`. Finally, `grunt` will be executed.*
+*Just as you would normally use `grunt`, command line arguments and options work too!*
+
+Then profit:
+
+```
+$$$
+```
+
+## Explaination
+
+When you execute `grunt-source`, it will look for your `Gruntsource.json` file, then it will
+look for the `source` directory, if it doesn't exist, `repo` will be cloned into
+it, followed by an `npm install`. Finally, `grunt` will be executed **from the `source` directory**, while also
+passing in a `--basedir` **option**. So all you need to add to your `Gruntfile.js` files is the line:
+`grunt.file.setBase(grunt.option("basedir"));`. See this
+[Gruntfile.coffee](https://github.com/jpillora/grunt-source-ghpages/blob/master/Gruntfile.coffee) for an example use case.
 
 ## Configuration
 
@@ -52,7 +67,7 @@ The `grunt-source` executable will proxy all arguments to the `grunt` executable
 
 See [grunt-source-ghpages](https://github.com/jpillora/grunt-source-ghpages) for another example grunt source
 
-See [verifyjs-com](https://github.com/jpillora/verifyjs-com) for an example project using `grunt-source-ghpages`
+See [notifyjs-com](https://github.com/jpillora/notifyjs-com) for an example project using `grunt-source-ghpages`
 
 <!--
 See [grunt-source-jquery](https://github.com/jpillora/grunt-source-jquery) for an example grunt source
