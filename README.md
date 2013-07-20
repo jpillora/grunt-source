@@ -43,6 +43,21 @@ Then profit:
 $$$
 ```
 
+## Alternative Usage
+
+Instead of creating a `Gruntsource.json`, you can add a `gruntSource` field to your `package.json` file:
+
+``` json
+{
+  "name": "my-module",
+  "version": "0.1.3",
+  "gruntSource": {
+    "source": "~/.grunt-sources/node",
+    "repo": "https://github.com/jpillora/grunt-source-node.git"
+  }
+}
+```
+
 ## Explaination
 
 When you execute `grunt-source`, it will look for your `Gruntsource.json` file, then it will

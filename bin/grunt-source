@@ -9,20 +9,29 @@ var colors = { red:'\u001b[31m', blue:'\u001b[34m', reset: '\u001b[0m' },
     defaultFileName = "Gruntsource.json",
     home = process.env.USERPROFILE || process.env.HOME || process.env.HOMEPATH;
 
+
+var config = null;
 //get config and run
-if(!fs.existsSync(defaultFileName))
-  exit("Configuration file ('%s') not found.", defaultFileName);
-
-var config = fs.readFileSync(defaultFileName);
-
-try {
-  config = JSON.parse(config);
-} catch(e) {
-  exit("Configuration file has an error: %s", e);
+if(fs.existsSync(defaultFileName)) {
+  try {
+    config = JSON.parse(fs.readFileSync(defaultFileName));
+  } catch(e) {
+    exit("Configuration file '%s' has an error: %s", defaultFileName, e);
+  }
+} else if(fs.existsSync("package.json")) {
+  try {
+    var pkg = JSON.parse(fs.readFileSync("package.json"));
+    config = pkg.gruntSource;
+  } catch(e) {
+    exit("package.json file has an error: %s", e);
+  }
 }
 
+if(!config)
+  exit("Configuration file ('%s') not found.", defaultFileName);
+
 if(!config.source)
-  exit("Configuration file is the 'source' property");
+  exit("Configuration file '%s' is missing the 'source' property", defaultFileName);
 
 if(/^~/.test(config.source))
   config.source = path.join(home, config.source.replace(/^~/,''));
@@ -68,10 +77,9 @@ function update() {
 }
 
 function run() {
-  var args = process.argv.slice(2).
-    concat(['--basedir', process.cwd()]);
+  var args = process.argv.slice(2).concat(['--basedir', process.cwd()]);
 
-  spawn("grunt", args, {
+  spawn(path.join(__dirname,'..','node_modules','grunt-cli','bin','grunt'), args, {
     cwd: config.source
   }, function(err) {
     if(err) exit("grunt-source error!");
