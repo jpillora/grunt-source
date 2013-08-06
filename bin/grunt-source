@@ -7,8 +7,8 @@ var colors = { red:'\u001b[31m', blue:'\u001b[34m', reset: '\u001b[0m' },
     mkdirp = require('mkdirp'),
     child = require('child_process'),
     defaultFileName = "Gruntsource.json",
+    ONE_DAY = 1000 * 60 * 60 * 24,
     home = process.env.USERPROFILE || process.env.HOME || process.env.HOMEPATH;
-
 
 var config = null;
 //get config and run
@@ -28,16 +28,16 @@ if(fs.existsSync(defaultFileName)) {
 }
 
 if(!config)
-  exit("Configuration file ('%s') not found.", defaultFileName);
+  exit("Configuration file '%s' not found.", defaultFileName);
 
 if(!config.source)
-  exit("Configuration file '%s' is missing the 'source' property", defaultFileName);
+  exit("Configuration is missing the 'source' property");
 
 if(/^~/.test(config.source))
   config.source = path.join(home, config.source.replace(/^~/,''));
 
 if(fs.existsSync(config.source))
-  run();
+  pull();
 else if(config.repo)
   checkout();
 else
@@ -48,32 +48,46 @@ else
 
 function validateSource() {
   //TODO
-  //git remote -v show
+  //git remote -v show === config.repo
 }
 
 function checkout() {
-  log("Source doesn't exist, cloning...", config.repo, config.source);
+  log("Creating Source... (git clone)");
   mkdirp.sync(path.dirname(config.source));
   spawn("git", ['clone', config.repo, config.source], function (err) {
-    if(err) exit("Clone error");
+    if(err) exit("Git clone error");
     update();
   });
 }
 
-function pull() {
-  //TODO
-}
-
 function update() {
-  log("NPM updating '%s'", config.source);
+  log("Updating Source Modules... (npm install)");
 
   if(!fs.existsSync(path.join(config.source,'package.json')))
     exit("Source directory has no 'package.json'");
 
   spawn("npm", ["install"], { cwd: config.source }, function(err) {
-    if(err) exit("Error NPM updating");
+    if(err) exit("Error npm updating");
     run();
   });
+}
+
+function pull() {
+  var fetchHead = path.join(config.source,'.git','FETCH_HEAD');
+
+  //pull once per day
+  if(fs.existsSync(fetchHead) &&
+     Date.now() - fs.statSync(fetchHead).atime.getTime() > ONE_DAY) {
+    log("Updating Source... (git pull)", config.source);
+    spawn("git", ['pull'], {
+      cwd: config.source
+    }, function (err) {
+      if(err) exit("Git pull error");
+      update();
+    });
+  } else {
+    run();
+  }
 }
 
 function run() {
