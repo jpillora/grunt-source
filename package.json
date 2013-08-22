@@ -1,6 +1,6 @@
 {
   "name": "grunt-source",
-  "version": "0.6.2",
+  "version": "0.7.1",
   "description": "Reuse multiple Grunt environments across multiple projects",
   "author": "Jaime Pillora <dev@jpillora.com>",
   "bin": {
@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "mkdirp": "~0.3.5",
-    "grunt-cli": "~0.1.9"
+    "lodash": "~1.3.1",
+    "load-grunt-tasks": "~0.1.0",
+    "semver": "~2.1.0"
   }
 }
