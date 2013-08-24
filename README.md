@@ -9,13 +9,13 @@ reuse a Grunt environment, it requires us to copy the current project and remove
 just the Grunt related files.
 
 **A static solution** - The Grunt team has made [grunt-init](https://github.com/gruntjs/grunt-init)
-which gives you a *static* copy of a predefined template. Note, grunt-init does provides a way to
-template in new values for each copy however, this is can still be improved.
+which gives you a *static* copy of a predefined template. Although `grunt-init` does provide a way to
+template in new values for each copy, this is can still be improved.
 
 **A dynamic solution** - Enter *Grunt Source*, instead of making numerous **static** copies of a given
 Grunt environment, you can actually use one Grunt environment for multiple projects. Also, having a
 directory separation between the Grunt environment and the actual source will help to reduce the
-complexity of your project. However, we can still have `grunt-init` like behaviour with `grunt-source`
+complexity of your project. We can still have `grunt-init` like behaviour with `grunt-source`
 (e.g. initial placeholder source files) by using the in-built [init task](https://github.com/jpillora/grunt-source#init).
 
 When using Grunt Source, projects will now contain only a `Gruntsource.json`, thereby abstracting
@@ -156,7 +156,7 @@ The `grunt-source` runs in the same was as `grunt-cli`, so commands like `grunt-
 
 See [grunt-source-web](https://github.com/jpillora/grunt-source-web) for 
 an example Grunt Source, and then see [notifyjs-com](https://github.com/jpillora/notifyjs-com)
-for an example project using `grunt-source-web`.
+for an example project using `grunt-source-web`. Or [grunt-source-node](https://github.com/jpillora/grunt-source-node). 
 
 #### MIT License
 
