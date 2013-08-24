@@ -52,7 +52,7 @@ And then **multiple** projects using this Grunt Source might look like:
 ```
 
 This directory structure is for [grunt-source-web](https://github.com/jpillora/grunt-source-web)
-to build optimized static websites, ready to be hosted.
+to build optimised static websites, ready to be hosted.
 
 ## Usage
 
@@ -80,9 +80,10 @@ to build optimized static websites, ready to be hosted.
   
    *If the "source" path doesn't exist, `grunt-source` will
    clone "repo" into "source", followed by an "npm install" inside the "source"
-   directory, finally, the run the [init task](#init).*
+   directory and then finally, it will run the [init task](#init).*
 
-  *You can use `grunt-source` just as you would normally use `grunt`, command line arguments and options work all function*
+  *You can use `grunt-source` just as you would normally use `grunt`,
+   command line arguments and options work all function*
 
 ## Alternative Configuration
 
@@ -103,14 +104,14 @@ Instead of creating a `Gruntsource.json`, you can add a `gruntSource` field to y
 
 ### Grunt Source Configuration
 
-* `source` - **required** - the directory where the *source* Grunt environment resides
-* `repo` - the Git repository which
+* `source` - **required** - the directory where the *source* Grunt environment resides.
+* `repo` - the Git repository which will be used to initialise and update the `source`.
 * `config` - an object which will get merged when you call `grunt.initConfig()`, allowing
     you to override the source Gruntfile.
 
 ### Grunt Source Object
 
-In your Gruntfile wrapper function, a `source` object is added to the `grunt` object 
+In your Gruntfile wrapper function, a `source` object is added to the `grunt` object.
 
 #### `grunt.source.loadAllTasks()` (function)
 
