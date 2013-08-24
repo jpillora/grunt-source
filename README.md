@@ -101,14 +101,14 @@ Instead of creating a `Gruntsource.json`, you can add a `gruntSource` field to y
 
 ## API
 
-### Grunt Source Configuration object
+### Grunt Source Configuration
 
 * `source` - **required** - the directory where the *source* Grunt environment resides
 * `repo` - the Git repository which
 * `config` - an object which will get merged when you call `grunt.initConfig()`, allowing
     you to override the source Gruntfile.
 
-### Grunt Source Methods
+### Grunt Source Object
 
 In your Gruntfile wrapper function, a `source` object is added to the `grunt` object 
 
@@ -166,7 +166,7 @@ Also, upon clone of the `repo` property, this task will automatically be run.
 
 ## CLI
 
-The `grunt-source` runs in the same was as `grunt-cli`, so commands like `grunt-source task2:target4 task3:target1` will work as you expect.
+The `grunt-source` runs in a similar way to `grunt-cli`, so commands like `grunt-source task2:target4 task3:target1` will work as you expect.
 
 ## Examples
 
