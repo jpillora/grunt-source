@@ -4,13 +4,51 @@
 
 ## Intro
 
-**The Problem** - Grunt environments can quickly become quite complicated and whenever we need to reuse a Grunt environment, it requires us to copy the current project and remove the source leaving just the Grunt related files.
+**The Problem** - Grunt environments can quickly become quite complicated and whenever we need to
+reuse a Grunt environment, it requires us to copy the current project and remove the source leaving
+just the Grunt related files.
 
-**A static solution** - The Grunt team has made [grunt-init](https://github.com/gruntjs/grunt-init) which gives you a *static* copy of a predefined template. Note, grunt-init does provides a way to template in new values for each copy however, this is can still be improved.
+**A static solution** - The Grunt team has made [grunt-init](https://github.com/gruntjs/grunt-init)
+which gives you a *static* copy of a predefined template. Note, grunt-init does provides a way to
+template in new values for each copy however, this is can still be improved.
 
-**A dynamic solution** - Enter *Grunt Source*, instead of making numerous **static** copies of a given Grunt environment, you can actually use one Grunt environment for multiple projects. Also, having a directory separation between the Grunt environment and the actual source will help to reduce the complexity of your project.
+**A dynamic solution** - Enter *Grunt Source*, instead of making numerous **static** copies of a given
+Grunt environment, you can actually use one Grunt environment for multiple projects. Also, having a
+directory separation between the Grunt environment and the actual source will help to reduce the
+complexity of your project. However, we can still have `grunt-init` like behaviour with `grunt-source`
+(e.g. initial placeholder source files) by using the in-built [init task](https://github.com/jpillora/grunt-source#init).
 
-When using Grunt Source, projects will now contain only a `Gruntsource.json`, thereby abstracting the magic of Grunt outside of the project. This will help those who don't need to know the complexities of the build, yet still want to modify the source.
+When using Grunt Source, projects will now contain only a `Gruntsource.json`, thereby abstracting
+the magic of Grunt outside of the project. This will help those who don't need to know the
+complexities of the build, yet still want to modify the source.
+
+So with Grunt Source, we'll have **one** Grunt Source project which looks like:
+```
+├── Gruntfile.coffee
+├── README.md
+├── init
+│   └── ...
+├── node_modules
+│   └── ...
+└── package.json
+```
+
+And then **multiple** projects using this Grunt Source might look like:
+```
+├── Gruntsource.json
+├── css
+│   └── app.css
+├── index.html
+├── js
+│   └── app.js
+└── src
+    ├── scripts
+    ├── styles
+    └── views
+```
+
+This directory structure is for [grunt-source-web](https://github.com/jpillora/grunt-source-web)
+to build optimized static websites, ready to be hosted.
 
 ## Usage
 
@@ -24,8 +62,8 @@ When using Grunt Source, projects will now contain only a `Gruntsource.json`, th
 
   ``` json
   {
-    "source": "~/.grunt-sources/ghpages",
-    "repo": "https://github.com/jpillora/grunt-source-ghpages.git"
+      "source": "~/.grunt-sources/web",
+      "repo": "https://github.com/jpillora/grunt-source-web.git"
   }
   ```
   *Note: The "source" path represents the source Grunt environment, if it's missing it'll clone "repo" there.*
@@ -68,7 +106,12 @@ In your Gruntfile wrapper function, a `source` object is added to the `grunt` ob
 
 #### `grunt.source.loadAllTasks()` (function)
 
-This function is **very** important, first it loads all of the tasks (npm tasks and local tasks) in the "source" directory (or the Grunt project directory), then it changes the working directory *back* to the current directory and loads all local tasks there.
+This function is **very** important, first it loads all of the tasks (npm tasks and
+local tasks) in the "source" directory (or the Grunt project directory), then it
+changes the working directory *back* to the current directory and loads all local tasks
+there. So before the function is called, the current working directory is the `source`
+directory. Therefore, in the majority of cases, we'll want to call this function
+**at the top** of our Grunt Source `Gruntfile.js`s.
 
 #### `grunt.source.dir` (string)
 
@@ -78,15 +121,42 @@ The absolute path to the source directory
 
 All properties defined in your configuration object will also be set on the `grunt.source` object
 
+For example, the `Gruntfile.coffee` in [grunt-source-web](https://github.com/jpillora/grunt-source-web.git), places
+the `grunt.source` object in the Jade data option object, so in our `index.jade` file, we can do things like:
+
+``` jade
+!!!5
+html
+  head
+    title #{source.title}
+  body
+    h5 #{source.title}
+```
+
+## In-built tasks
+
+Before `grunt` is started, the following tasks are registered (`grunt.registerTask`).
+Therefore, all Grunt Sources will have the following tasks avaiable (just `init` for now).
+
+#### `init`
+
+Although we no longer need to copy and paste our Grunt environments across various projects. It can
+still be useful to generate an initial set of source files.
+
+`grunt-source init` will copy all files from the source directory's init folder into the current
+working directory, however, it will only copy those files that are **missing**.
+
+Also, upon clone of the `repo` property, this task will automatically be run.
+
 ## CLI
 
-The `grunt-source` runs in the same was as `grunt-clie`, so commands like `grunt-source task2:target4 task3:target1` will work as you expect.
+The `grunt-source` runs in the same was as `grunt-cli`, so commands like `grunt-source task2:target4 task3:target1` will work as you expect.
 
 ## Examples
 
-See [grunt-source-ghpages](https://github.com/jpillora/grunt-source-ghpages) for another example grunt source
-
-See [notifyjs-com](https://github.com/jpillora/notifyjs-com) for an example project using `grunt-source-ghpages`
+See [grunt-source-web](https://github.com/jpillora/grunt-source-web) for 
+an example Grunt Source, and then see [notifyjs-com](https://github.com/jpillora/notifyjs-com)
+for an example project using `grunt-source-web`.
 
 #### MIT License
 
