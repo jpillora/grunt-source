@@ -66,14 +66,17 @@ to build optimized static websites, ready to be hosted.
       "repo": "https://github.com/jpillora/grunt-source-web.git"
   }
   ```
-  *Note: The "source" path represents the source Grunt environment, if it's missing it'll clone "repo" there.*
+  *The "source" path represents the source Grunt environment*
 
 * Then simply run `grunt-source`
 
   ``` sh
   grunt-source
   ```
-  *Note: On first run, it will also run the `init` task - registered by Grunt Source - which copies the **missing** files from `"source"/init` directory into the current directory, essentially initialising your project.*
+  
+   *If the "source" path doesn't exist, `grunt-source` will
+   clone "repo" into "source", followed by an "npm install" inside the "source"
+   directory, finally, the run the [init task](#init).*
 
   *You can use `grunt-source` just as you would normally use `grunt`, command line arguments and options work all function*
 
@@ -98,7 +101,8 @@ Instead of creating a `Gruntsource.json`, you can add a `gruntSource` field to y
 
 * `source` - **required** - the directory where the *source* Grunt environment resides
 * `repo` - the Git repository which
-* `config` - an object which will get merged when you call `grunt.initConfig()`, allowing you to override the source Gruntfile.
+* `config` - an object which will get merged when you call `grunt.initConfig()`, allowing
+    you to override the source Gruntfile.
 
 ### Grunt Source Methods
 
@@ -123,6 +127,14 @@ All properties defined in your configuration object will also be set on the `gru
 
 For example, the `Gruntfile.coffee` in [grunt-source-web](https://github.com/jpillora/grunt-source-web.git), places
 the `grunt.source` object in the Jade data option object, so in our `index.jade` file, we can do things like:
+
+``` json
+{
+  "source": "~/.grunt-sources/web",
+  "repo": "https://github.com/jpillora/grunt-source-web.git",
+  "title": "Hello Grunt Source"
+}
+```
 
 ``` jade
 !!!5
