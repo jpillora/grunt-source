@@ -106,8 +106,8 @@ Instead of creating a `Gruntsource.json`, you can add a `gruntSource` field to y
 
 * `source` - **required** - the directory where the *source* Grunt environment resides.
 * `repo` - the Git repository which will be used to initialise and update the `source`.
-* `config` - an object which will get merged when you call `grunt.initConfig()`, allowing
-    you to override the source Gruntfile.
+  * `url[@ref]` where `ref` is a [Git Reference](http://git-scm.com/book/en/Git-Internals-Git-References) (tag or commit hash)
+* `config` - an object which will get merged when you call `grunt.initConfig()`, allowing you to override the source Gruntfile configuration.
 
 ### Grunt Source Object
 
@@ -121,6 +121,26 @@ changes the working directory *back* to the current directory and loads all loca
 there. So before the function is called, the current working directory is the `source`
 directory. Therefore, in the majority of cases, we'll want to call this function
 **at the top** of our Grunt Source `Gruntfile.js`s.
+
+Essentially, the above description is the following:
+
+``` js
+//cwd is initially set the source directory!
+
+//automatically `grunt.loadNpmTasks` all tasks inside the source directory's package.json's 'devDependencies' field
+loadGruntTasks(grunt);
+
+//load all user defined tasks inside the source directory
+grunt.loadTasks("./tasks");
+
+//set cwd to project directory (the directory you execute 'grunt-source' from)
+process.chdir(PROJECT_DIR);
+
+//load all user defined tasks inside the project directory
+grunt.loadTasks("./tasks");
+```
+
+`loadGruntTasks` is provided by [load-grunt-tasks](https://github.com/sindresorhus/load-grunt-tasks)
 
 #### `grunt.source.dir` (string)
 
