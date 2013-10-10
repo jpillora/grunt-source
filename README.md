@@ -91,11 +91,13 @@ to build optimised static websites, ready to be hosted.
 
 ### Grunt Source Configuration
 
+In your Gruntsource.json file, the following properties are allowed:
+
 * `source` - **required** - the directory where the *source* Grunt environment resides.
 * `repo` - the Git repository which will be used to initialise and update the `source`.
   * `url[@ref]` where `ref` is a [Git Reference](http://git-scm.com/book/en/Git-Internals-Git-References) (tag or commit hash)
 * `config` - an object which will get merged when you call `grunt.initConfig()`, allowing you to override the source Gruntfile configuration.
-* `<prop>` - any valid JSON value, in your `Gruntfile.js`, these will be accessible as `grunt.source.<prop>`.
+* `<prop>` - any valid JSON value, in your `Gruntfile.js` will be accessible as `grunt.source.<prop>`.
 
 ### Grunt Source Object
 
