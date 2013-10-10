@@ -1,58 +1,10 @@
 # Grunt Source
 
-> Reuse multiple Grunt environments across multiple projects
+Reuse a Grunt environment across multiple projects
 
 <a href="https://twitter.com/intent/tweet?hashtags=gruntjs&original_referer=http%3A%2F%2Fgithub.com%2F&text=Grunt+Source+-+Reuse+multiple+Grunt+environments+across+multiple+projects&tw_p=tweetbutton&url=https%3A%2F%2Fgithub.com%2Fjpillora%2Fgrunt-source" target="_blank">
   <img src="http://jpillora.com/github-twitter-button/img/tweet.png"></img>
 </a>
-
-## Intro
-
-**The Problem** - Grunt environments can quickly become quite complicated and whenever we need to
-reuse a Grunt environment, it requires us to copy the current project and remove the source leaving
-just the Grunt related files.
-
-**A static solution** - The Grunt team has made [grunt-init](https://github.com/gruntjs/grunt-init)
-which gives you a *static* copy of a predefined template. Although `grunt-init` does provide a way to
-template in new values for each copy, this is can still be improved.
-
-**A dynamic solution** - Enter *Grunt Source*, instead of making numerous **static** copies of a given
-Grunt environment, you can actually use one Grunt environment for multiple projects. Also, having a
-directory separation between the Grunt environment and the actual source will help to reduce the
-complexity of your project. We can still have `grunt-init` like behaviour with `grunt-source`
-(e.g. initial placeholder source files) by using the in-built [init task](https://github.com/jpillora/grunt-source#init).
-
-When using Grunt Source, projects will now contain only a `Gruntsource.json`, thereby abstracting
-the magic of Grunt outside of the project. This will help those who don't need to know the
-complexities of the build, yet still want to modify the source.
-
-So with Grunt Source, we'll have **one** Grunt Source project which looks like:
-```
-├── Gruntfile.coffee
-├── README.md
-├── init
-│   └── ...
-├── node_modules
-│   └── ...
-└── package.json
-```
-
-And then **multiple** projects using this Grunt Source might look like:
-```
-├── Gruntsource.json
-├── css
-│   └── app.css
-├── index.html
-├── js
-│   └── app.js
-└── src
-    ├── scripts
-    ├── styles
-    └── views
-```
-
-This directory structure is for [grunt-source-web](https://github.com/jpillora/grunt-source-web)
-to build optimised static websites, ready to be hosted.
 
 ## Example
 
@@ -105,6 +57,54 @@ Instead of creating a `Gruntsource.json`, you can add a `gruntSource` field to y
   }
 }
 ```
+
+## Motivation
+
+**The Problem** - Grunt environments can quickly become quite complicated and whenever we need to
+reuse a Grunt environment, it requires us to copy the current project and remove the source leaving
+just the Grunt related files.
+
+**A static solution** - The Grunt team has made [grunt-init](https://github.com/gruntjs/grunt-init)
+which gives you a *static* copy of a predefined template. Although `grunt-init` does provide a way to
+template in new values for each copy, this is can still be improved.
+
+**A dynamic solution** - Enter *Grunt Source*, instead of making numerous **static** copies of a given
+Grunt environment, you can actually use one Grunt environment for multiple projects. Also, having a
+directory separation between the Grunt environment and the actual source will help to reduce the
+complexity of your project. We can still have `grunt-init` like behaviour with `grunt-source`
+(e.g. initial placeholder source files) by using the in-built [init task](https://github.com/jpillora/grunt-source#init).
+
+When using Grunt Source, projects will now contain only a `Gruntsource.json`, thereby abstracting
+the magic of Grunt outside of the project. This will help those who don't need to know the
+complexities of the build, yet still want to modify the source.
+
+So with Grunt Source, we'll have **one** Grunt Source project which looks like:
+```
+├── Gruntfile.coffee
+├── README.md
+├── init
+│   └── ...
+├── node_modules
+│   └── ...
+└── package.json
+```
+
+And then **multiple** projects using this Grunt Source might look like:
+```
+├── Gruntsource.json
+├── css
+│   └── app.css
+├── index.html
+├── js
+│   └── app.js
+└── src
+    ├── scripts
+    ├── styles
+    └── views
+```
+
+This directory structure is for [grunt-source-web](https://github.com/jpillora/grunt-source-web)
+to build optimised static websites, ready to be hosted.
 
 ## API
 
