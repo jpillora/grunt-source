@@ -1,6 +1,6 @@
 {
   "name": "grunt-source",
-  "version": "0.7.9",
+  "version": "0.7.10",
   "description": "Reuse multiple Grunt environments across multiple projects",
   "author": "Jaime Pillora <dev@jpillora.com>",
   "bin": {
