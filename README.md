@@ -54,6 +54,12 @@ And then **multiple** projects using this Grunt Source might look like:
 This directory structure is for [grunt-source-web](https://github.com/jpillora/grunt-source-web)
 to build optimised static websites, ready to be hosted.
 
+## Example
+
+For a simple example, please see:
+
+### [grunt-source-example](./example)
+
 ## Usage
 
 * Install Grunt Source
