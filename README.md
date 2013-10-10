@@ -2,15 +2,9 @@
 
 Reuse a Grunt environment across multiple projects
 
-<a href="https://twitter.com/intent/tweet?hashtags=gruntjs&original_referer=http%3A%2F%2Fgithub.com%2F&text=Grunt+Source+-+Reuse+multiple+Grunt+environments+across+multiple+projects&tw_p=tweetbutton&url=https%3A%2F%2Fgithub.com%2Fjpillora%2Fgrunt-source" target="_blank">
+<a href="https://twitter.com/intent/tweet?hashtags=gruntjs&original_referer=http%3A%2F%2Fgithub.com%2F&text=Grunt+Source+-+Reuse+a+Grunt+environment+across+multiple+projects&tw_p=tweetbutton&url=https%3A%2F%2Fgithub.com%2Fjpillora%2Fgrunt-source" target="_blank">
   <img src="http://jpillora.com/github-twitter-button/img/tweet.png"></img>
 </a>
-
-## Example
-
-For a simple example, please see:
-
-### [grunt-source-example](./example)
 
 ## Usage
 
@@ -20,43 +14,32 @@ For a simple example, please see:
   npm install -g grunt-source
   ```
 
-* Create a `Gruntsource.json` configuration in your project's root
+* In your project's root, create a `Gruntsource.json` pointing to your source Grunt environment:
 
   ``` json
   {
-      "source": "~/.grunt-sources/web",
-      "repo": "https://github.com/jpillora/grunt-source-web.git"
+      "source": "../grunt-source-foo"
   }
   ```
-  *The "source" path represents the source Grunt environment*
+
+* A source Grunt environment is a directory with a normal `Gruntfile.js`, with two slight modifications:
+
+  * All calls to `grunt.loadNpmTasks()` will need to be removed.
+  * The call [`grunt.source.loadAllTasks();`](#gruntsourceloadalltasks-function) will need to be added to the top of your `Gruntfile.js` (See the [example](./example)).
 
 * Then simply run `grunt-source`
 
   ``` sh
   grunt-source
   ```
-  
-   *If the "source" path doesn't exist, `grunt-source` will
-   clone "repo" into "source", followed by an "npm install" inside the "source"
-   directory and then finally, it will run the [init task](#init).*
 
-  *You can use `grunt-source` just as you would normally use `grunt`,
-   command line arguments and options work all function*
+  *You can use `grunt-source` just as you would normally use `grunt`. Give `grunt-source --help` a try.*
 
-## Alternative Configuration
+## Example
 
-Instead of creating a `Gruntsource.json`, you can add a `gruntSource` field to your `package.json` file:
+For a simple example, please see:
 
-``` json
-{
-  "name": "my-module",
-  "version": "0.1.3",
-  "gruntSource": {
-    "source": "~/.grunt-sources/node",
-    "repo": "https://github.com/jpillora/grunt-source-node.git"
-  }
-}
-```
+### [grunt-source-example](./example)
 
 ## Motivation
 
@@ -114,6 +97,7 @@ to build optimised static websites, ready to be hosted.
 * `repo` - the Git repository which will be used to initialise and update the `source`.
   * `url[@ref]` where `ref` is a [Git Reference](http://git-scm.com/book/en/Git-Internals-Git-References) (tag or commit hash)
 * `config` - an object which will get merged when you call `grunt.initConfig()`, allowing you to override the source Gruntfile configuration.
+* `<prop>` - any valid JSON value, in your `Gruntfile.js`, these will be accessible as `grunt.source.<prop>`.
 
 ### Grunt Source Object
 
@@ -152,7 +136,7 @@ grunt.loadTasks("./tasks");
 
 The absolute path to the source directory
 
-#### `grunt.source.<config-prop>`
+#### `grunt.source.<prop>`
 
 All properties defined in your configuration object will also be set on the `grunt.source` object
 
@@ -190,6 +174,22 @@ still be useful to generate an initial set of source files.
 working directory, however, it will only copy those files that are **missing**.
 
 Also, upon clone of the `repo` property, this task will automatically be run.
+
+
+## Alternative Configuration
+
+Instead of creating a `Gruntsource.json`, you can add a `gruntSource` field to your `package.json` file:
+
+``` json
+{
+  "name": "my-module",
+  "version": "0.1.3",
+  "gruntSource": {
+    "source": "~/.grunt-sources/node",
+    "repo": "https://github.com/jpillora/grunt-source-node.git"
+  }
+}
+```
 
 ## CLI
 
