@@ -14,18 +14,16 @@ Reuse a Grunt environment across multiple projects
   npm install -g grunt-source
   ```
 
-* In your project's root, create a `Gruntsource.json` pointing to your source Grunt environment:
-
+* In your project's root, create a `Gruntsource.json` pointing to your Grunt source environment:
   ``` json
   {
       "source": "../grunt-source-foo"
   }
   ```
+* A Grunt source environment is a directory with a normal `Gruntfile.js` with two slight modifications:
 
-* A source Grunt environment is a directory with a normal `Gruntfile.js`, with two slight modifications:
-
-  * All calls to `grunt.loadNpmTasks()` will need to be removed.
-  * The call [`grunt.source.loadAllTasks();`](#gruntsourceloadalltasks-function) will need to be added to the top of your `Gruntfile.js` (See the [example](./example)).
+  * All calls to `grunt.loadNpmTasks()` removed.
+  * A call to [`grunt.source.loadAllTasks();`](#gruntsourceloadalltasks-function) is added to the top of the `Gruntfile.js` (See the [example](./example)).
 
 * Then simply run `grunt-source`
 
@@ -39,7 +37,7 @@ Reuse a Grunt environment across multiple projects
 
 For a simple example, please see:
 
-### [grunt-source-example](./example)
+> ### [grunt-source-example](./example)
 
 ## Motivation
 
