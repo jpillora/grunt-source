@@ -1,9 +1,7 @@
 
 ## Grunt Source Example
 
-The following demonstrates the simplest way to use Grunt Source.
-
-Here, we're using `grunt-source-example` to minify `project-1` and `project-2`:
+The following demonstrates the simplest way to use Grunt Source. Here, we're using `grunt-source-example` to minify `project-1` and `project-2`:
 
 ``` sh
 $ npm install -g grunt-source
@@ -30,6 +28,6 @@ File "build/bar.js" created.
 Done, without errors.
 ```
 
-Note: Grunt source noticed that there was no `node_modules` folder in the source directory, so for the first execute, it performed an `npm install`. 
+Note: Grunt source noticed that there was no `node_modules` folder in the source directory, so for the first execution, it performed an `npm install`. 
 
-Tip: By including a `repo` field in your `Gruntsource.json`, `grunt-source` will automatically grab that url and place it in `source` (`git clone <repo> <source>`).
+Tip: Including a `repo` field in your `Gruntsource.json`, will tell Grunt Source to initialize the `source` folder using the given `repo` url (`git clone <repo> <source>`).
